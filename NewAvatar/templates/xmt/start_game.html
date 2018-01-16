@@ -1,0 +1,272 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--新增js-->
+    <!--<script src="{% static 'js/Jcrop/jquery.min.js' %}"></script>-->
+    <link rel="stylesheet" href="{% static 'css/xmt/Jcss/jquery.Jcrop.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/xmt/start_game.css' %}">
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/Jcrop/jquery.Jcrop.min.js' %}"></script>
+
+    <title>你是第{{ xmt_u_num }}个访问者</title>
+</head>
+
+<script>
+    $(function () {
+        console.log("rerererrer");
+        has_file = false;
+        setInterval(function () {
+            if($("#file").val() !="" ){
+                if(!has_file){
+                    $("#upload").click();
+                    has_file = true;
+                }
+
+            }else{
+                console.log("dalao...")
+            }
+
+        },1000);
+
+    });
+
+
+    $(function(){
+
+        // 重置窗口
+        function cal_window() {
+
+//        动态计算窗口
+        if ($(window).width() < 400){
+
+            console.log("窗口小于400");
+
+            $("#bg").attr("width", "100%");
+            $("#bg").css("height", $(document).height());
+
+        }
+        else {
+            console.log("窗口大于400");
+
+            $("#bg").attr("width", "400px");
+            $("#bg").css("height", $(document).height());
+
+
+        }
+
+    }
+
+    cal_window();
+
+        $(window).resize(function () {
+
+            console.log("窗口尺寸重置");
+            console.log($(window).width());
+            cal_window()
+        })
+
+        var desc_id = 0;
+        var u_id;
+        var xmt_desc_image;
+
+        function get_update_button() {
+            if(desc_id>=1){
+                $("#my_label").show(1000);
+                $(".big_title").hide(1000);
+            }else{
+                $("#my_label").hide(1000);
+                $(".big_title").show(1000);
+            }
+        }
+
+        //获取装饰物的id
+        $(".design_desc > img").click(function () {
+
+            desc_id = $(this).attr("design_desc_id");
+            $("img").attr("style", "border: 3px solid #cf221b");
+            $(this).attr("style","border: 3px solid #0c8ac5");
+
+            console.log("已选中"+desc_id);
+            xmt_desc_image = $(this).attr("src");
+            get_update_button();
+
+        });
+
+        u_id = $("#u_id").text();
+
+        // 按下选择头像文件按钮之后
+        $("#my_label").click(function () {
+            console.log("当前的desc_id为"+desc_id);
+            if (desc_id >= 1 ){
+                var csrf_value2 = $("#csrfmiddlewaretoken").text();
+                var formData = new FormData();
+
+                u_num = $("#u_num").text();
+//                $("#file").click();
+                console.log("desc_id"+desc_id);
+                console.log("u_id"+u_id);
+                console.log("u_num"+u_num);
+                console.log("csrf"+csrf_value2);
+
+
+                formData.append("desc_id", desc_id);
+                formData.append("u_id", u_id);
+                formData.append("u_num", u_num);
+                formData.append("csrfmiddlewaretoken", csrf_value2);
+
+
+                $.extend({
+                    StandardPost:function(url,args){
+                        var form = $("<form method='post'></form>"),
+                            input;
+                        form.attr({"action":url});
+                        $.each(args,function(key,value){
+                            input = $("<input type='hidden'>");
+                            input.attr({"name":key});
+                            input.val(value);
+                            form.append(input);
+                        });
+
+                        form.appendTo(document.body);
+                        form.submit();
+                        document.body.removeChild(form[0]);
+                        }
+                    });
+
+                $.StandardPost('/xmt/report_info/',{"desc_id":desc_id,"u_id":u_id,"u_num":u_num,"csrfmiddlewaretoken":csrf_value2});
+
+            }else{
+                alert("请先选择装饰!");
+            }
+
+        });
+
+        $("#upload").click(function () {
+
+            var csrf_value2 = $("#csrfmiddlewaretoken").text();
+            var formData = new FormData();
+            formData.append('file', $('#file')[0].files[0]);
+            formData.append("csrfmiddlewaretoken", csrf_value2);
+            formData.append("desc_id", desc_id);
+            formData.append("xmt_desc_image", xmt_desc_image);
+            formData.append("u_id", u_id);
+
+            function ajax_image() {
+                $.ajax({
+                "url": "/xmt/get_icon/",
+                "type": "POST",
+                'data': formData,
+                "processData": false,
+                "contentType": false,
+                "success": function (data) {
+
+                    console.log(data.new_image_addr);
+                    new_html ='<img src="'+data.new_image_addr+'" alt="">';
+                    new_html = new_html + '<div id="long">'+ '长按图片,保存头像' + '</div>';
+                    $("#my_new_icon").append(new_html);
+                    $(".design_desc").hide(0);
+                    $("form").hide()
+
+                }
+            });
+            }
+
+            $("#bg").attr("style", "background-image: url('/static/images/xmt/desc_image/2background.jpg')")
+            cal_window();
+
+            ajax_image()
+        })
+    })
+
+</script>
+
+
+
+<body>
+
+
+<div id="bg-contain">
+
+
+<div id="bg" class="clearfix">
+
+    <div id="my_mull">
+
+    </div>
+
+
+
+
+
+    <div class="big_title">
+        请您选择喜欢的头饰:
+    </div>
+
+<div class="desc_images">
+
+    <img src="/static/images/xmt/desc_image/2background.jpg" id="two_bg">
+
+{% for design_desc in all_design_desc %}
+
+    <span class="design_desc">
+
+        <img src="/static/images/{{design_desc.xmt_desc_image}}" design_desc_id ="{{design_desc.xmt_desc_id}}" style="border: 3px solid #c03035">
+
+    </span>
+
+{% endfor %}
+
+
+
+</div>
+
+
+<div style="display: none" id="u_id">{{u_id}}</div>
+
+
+<div class="get_image">
+
+    <form action="" id="uploadForm" enctype="multipart/form-data" method="POST">
+
+        <input class="inputfile" type="file" name="file" id="file" accept="image/*"/>
+
+        <div id="my_label">
+
+            <label>下一步</label>
+
+        </div>
+
+        <button id="upload" type="button">获取头像</button>
+
+    </form>
+</div>
+
+
+<div id="my_new_icon">
+
+
+</div>
+
+
+<div id ="csrfmiddlewaretoken" style="display: none">{{csrf_token}}</div>
+
+
+
+</div>
+
+
+
+</div>
+
+<div id="u_num" style="display: none">{{ xmt_u_num }}</div>
+
+</body>
+</html>

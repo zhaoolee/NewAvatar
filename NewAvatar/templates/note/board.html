@@ -1,0 +1,128 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+
+
+{% block css_link %}
+
+
+    <link rel="stylesheet" href="{% static 'css/note/board.css' %}">
+
+{% endblock css_link %}
+
+
+{% block nav_js %}
+<script>
+    $(function(){
+
+        function set_margin(parent_width, son_width) {
+            // 取余数(正确)
+            var remainder = parent_width % son_width;
+            // 取整数商
+            var quotient = (parent_width-remainder) / son_width;
+            var margin_value = parseInt((parent_width - ((son_width)* quotient)) / (quotient*2));
+
+            $(".son").css("margin-left", margin_value);
+            $(".son").css("margin-right", margin_value);
+        }
+
+        function my_resize() {
+            // 动态获取父标签宽度
+            var parent_width = $(".parent").width();
+            $("#p_width").text(parent_width);
+            // 获取子标签宽度
+            var son_width = $(".son:first").outerWidth();
+            $("#s_width").text(son_width);
+            var border_width = $(".son:first").css("border_width");
+            var padding_width = $(".son:first").css("padding");
+            set_margin(parent_width, son_width)
+        }
+
+        my_resize();
+        $(window).resize(function () {
+            my_resize()
+        });
+
+    })
+
+
+
+
+
+</script>
+
+
+
+{% endblock nav_js %}
+
+
+{% block nav %}
+<div class="main_title">
+
+    方圆留言板
+
+
+</div>
+
+
+<form action="{% url 'note:add_message' %}" method="post">
+
+    {% csrf_token %}
+
+
+    <div>
+
+        <label for="user_name">用户名</label>
+        <input type="text" id="user_name" name="user_name">
+
+    </div>
+
+    <div>
+
+        <label for="content">留言内容</label>
+        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+
+    </div>
+
+    <div>
+
+        <input type="submit" value="提交" id="submit">
+
+    </div>
+
+
+
+</form>
+
+<hr>
+<div class="super_title">
+
+    精选留言
+
+</div>
+
+<hr>
+
+<div class="bottom_content clearfix parent">
+
+    {% for message in all_message %}
+
+    <div class="message_board son">
+        <span>留言IP</span>
+        <div class="ip">{{message.author_ip}}</div>
+        <span>留言用户</span>
+        <div class="user_name">{{message.author_name}}</div>
+        <span>留言内容</span>
+        <div class="content">{{message.message_content}}</div>
+
+        <span>留言时间</span>
+        <div class="content">{{message.create_time}}</div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+{% endblock nav %}
+
+

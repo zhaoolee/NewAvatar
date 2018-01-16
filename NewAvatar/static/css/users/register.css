@@ -1,0 +1,62 @@
+#user_name{
+
+
+
+
+}
+
+form{
+
+    width: 350px;
+    height: 450px;
+
+    border: 1px solid #0c8ac5;
+
+    margin: 50px auto;
+    border-radius: 10px;
+    padding: 20px;
+
+}
+
+form div{
+
+
+    margin-top: 20px;
+
+}
+
+form input{
+    border: 0;
+    padding: 0;
+    width: 200px;
+    height: 28px;
+    float: right;
+    background-color: #fdf6e3;
+    border-radius: 5px;
+
+}
+
+form label{
+
+    color: #0c8ac5;
+    font-size: 20px;
+
+}
+
+#submit{
+
+    margin: 0 auto;
+
+    background-color: #0c8ac5;
+    width: 310px;
+    height: 50px;
+    color: #fdf6e3;
+    font-size: 20px;
+
+
+}
+
+#logo2{
+
+    text-align: center;
+}

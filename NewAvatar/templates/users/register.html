@@ -1,0 +1,66 @@
+
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/users/register.css' %}">
+    <title>方圆注册</title>
+</head>
+<body>
+
+<form action="{% url 'users:register_submit' %}" method="post">
+
+    <div id="logo2">
+
+        <a href="{% url 'nav:index' %}">
+
+
+        <img src="{% static 'images/logo2.png' %}"  width="150px" height="75px">
+        </a>
+
+    </div>
+
+    <div>
+        <label for="user_name">用户名:</label>
+        <input type="text" id="user_name">
+        <br>
+    </div>
+
+    <div>
+        <label for="passwd">密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+        <input type="password" id="passwd" value="">
+        <br>
+    </div>
+
+    <div>
+        <label for="passwd_two">重复密码:</label>
+        <input type="password" id="passwd_two">
+        <br>
+    </div>
+
+    <div>
+        <label for="e_mail">注册邮箱:</label>
+        <input type="text" id="e_mail">
+        <br>
+    </div>
+
+    <div>
+
+        <input type="submit" value="注&nbsp;&nbsp;&nbsp;&nbsp;册" id="submit">
+
+    </div>
+    {% csrf_token %}
+
+
+</form>
+
+
+</body>
+</html>

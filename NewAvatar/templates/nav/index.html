@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+
+
+{% block css_link %}
+{% endblock css_link %}
+
+
+
+{% block nav_js %}
+{% endblock nav_js%}
+
+<!--导航区-->
+
+{% load zhao_fillter %}
+
+<!--内容区-->
+
+{% block nav %}
+
+
+    {% for big_title in big_titles %}
+    <div class="part_content">
+
+
+    <div class="c_big_title " id="{{ big_title.title_target_id }}">
+
+        {{ big_title.title_name }}
+
+    </div>
+
+
+    <div class="atom_content parent">
+        {% for atom in atoms %}
+
+
+            {% if atom.atom_title.title_name == big_title.title_name %}
+
+                <div class="base_image_title son">
+
+
+                    <div class="base_image">
+                        <a href="{{ atom.atom_outlink }}" target="_blank">
+                            <img src="{% static atom.atom_image|get_image_path %}">
+                            <div class="atom_id" style="display: none">{{ atom.id }}</div>
+                            <div class="visits" style="display: none">{{ atom.atom_visits }}</div>
+                        </a>
+                    </div>
+
+
+                    <div class="base_title">{{ atom.atom_name }}</div>
+
+                    <div class="base_content">{{ atom.atom_short  }}</div>
+                </div>
+
+
+
+            {% endif %}
+
+        {% endfor %}
+        </div>
+
+    </div>
+
+    {% endfor %}
+    <div style="width: 100%; height: 50px; float:left;"></div>
+
+{% endblock nav %}
+

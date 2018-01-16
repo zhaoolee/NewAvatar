@@ -1,0 +1,126 @@
+.main_title{
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 25px;
+    color: #0c8ac5;
+
+}
+
+.clearfix:before, .clearfix:after{
+    content: "";
+    display: table;
+}
+
+.clearfix:after{
+
+    clear:both;
+}
+
+/*适配非主流浏览器(IE浏览器)*/
+
+.clearfix{
+
+    zoom:1;
+
+}
+
+
+form{
+
+    width: 300px;
+    height: 600px;
+
+    border: 1px solid #0c8ac5;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+form div{
+
+    margin-top: 20px;
+
+}
+
+#user_name{
+
+    width: 100%;
+    height: 40px;
+    border: 1px solid #0c8ac5;
+    border-radius: 5px;
+
+}
+
+#content{
+
+    width: 100%;
+    height: 350px;
+    border-radius: 5px;
+    border: 1px solid #0c8ac5;
+
+
+}
+#submit{
+
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #0c8ac5;
+    color: #fdf6e3;
+
+}
+
+.message_board{
+
+    width: 300px;
+    height: 300px;
+    float: left;
+    border: 1px solid #0c8ac5;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+
+}
+
+.bottom_content{
+
+
+    /*text-align: center;*/
+
+    width: 100%;
+    margin: 0 auto;
+    /*align-content: center;*/
+
+}
+
+.super_title{
+
+    font-size: 30px;
+    color: #0c8ac5;
+    border-left: solid 2px #0c8ac5;
+    padding-left: 10px;
+
+
+}
+
+.message_board>span{
+
+    font-size: 15px;
+    border: 1px solid #0c8ac5;
+    color: #0c8ac5;
+    padding: 2px;
+    border-radius: 3px;
+    line-height: 20px;
+
+
+
+}
+
+.ip, .user_name, .content{
+
+    line-height: 30px;
+
+}
+

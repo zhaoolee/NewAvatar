@@ -1,0 +1,83 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block css_link %}
+
+
+<link rel="stylesheet" href="{% static 'css/spider/bdwk.css' %}">
+
+{% endblock css_link %}
+
+{% block nav_js %}
+    <script>
+
+
+        $(function () {
+            // 点击提交后
+            $("#wk_send").click(function () {
+                // 获取输入的值
+                wk_url = $("#wkinput").val();
+
+                if (wk_url.length <= 5 || wk_url>= 100){
+                    alert("您输入的值不合法,请重新输入!")
+                }
+                else{
+                    alert("已提交");
+                    var csrf_value = $('#csrfmiddlewaretoken').text();
+
+                    $("#my_file").text("服务器正在为您下载资源,请耐心等待半分钟...");
+
+                    $.ajax({
+                        'url': '/spider/get_file',
+
+                        'data': {"wk_url": wk_url, 'csrfmiddlewaretoken': csrf_value},
+                        'type': 'post',
+                        'async': false,
+                        'success': function (data) {
+                            var src = data.data.src;
+                            var title_name = data.data.title_name;
+                            $("#my_file").attr("href",src);
+                            $("#my_file").attr("download",title_name);
+                            $("#my_file").text(title_name);
+                            alert("下载完成,请点击方框内文字,进行下载")
+
+                        }
+                        })
+                    }
+                    $("#wkinput").val("")
+            })
+        })
+
+    </script>
+{% endblock nav_js %}
+
+{% block nav %}
+
+<div class="wk_con">
+
+    <div id="wkurl">请输入文库资源的url</div>
+
+    <input id="wkinput" type="text">
+    <br>
+    <button id="wk_send">提交
+
+    </button>
+
+
+    <div id="wk_file">
+
+        <a id = "my_file" download="my_file" href="null">(目前支持的类型doc,txt,pdf)</a>
+
+
+
+
+    </div>
+    <span id ="csrfmiddlewaretoken" style="display: none">{{csrf_token}}</span>
+
+
+
+
+
+
+</div>
+{% endblock nav %}

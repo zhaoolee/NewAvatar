@@ -1,0 +1,50 @@
+.wk_con{
+
+    text-align: center;
+}
+
+
+#wkurl{
+
+    font-size: 15px;
+    color: #0c8ac5;
+    text-align: center;
+
+    margin-top: 100px;
+}
+
+#wkinput{
+
+
+    width: 50%;
+    height: 25px;
+    font-size: 15px;
+    border: 1px solid #0c8ac5;
+    margin: 10px auto;
+    border-radius: 3px;
+
+
+}
+
+#wk_send{
+
+    width: 70px;
+    height: 30px;
+    margin: 10px auto;
+    display: inline-block;
+
+}
+
+
+#wk_file{
+
+    width: 200px;
+    height: 200px;
+    border: 1px solid #0c8ac5;
+    border-radius: 5px;
+    margin: 10px auto;
+    padding: 80px 0;
+
+
+}
+

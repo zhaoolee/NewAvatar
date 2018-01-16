@@ -1,0 +1,146 @@
+.my_nike_name{
+
+    width: 300px;
+
+    color: #fdf6e3;
+    /*padding: 10px 0;*/
+    border-bottom: 1px solid #fdf6e3;
+    margin: 10px auto;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+
+#show_info{
+    width: 340px;
+    height: 200px;
+    /*background-color: #0c8ac5;*/
+    /*border: 1px solid #d46f17;*/
+    overflow: scroll;
+
+}
+
+#content{
+
+    width: 300px;
+    /*border: 1px solid #823384;*/
+    margin: 10px 10px;
+}
+
+
+#input_info{
+
+
+    width: 300px;
+    height: 40px;
+    margin: 10px 10px;
+}
+
+#main_form{
+
+    width: 320px;
+    height: 450px;
+    border-radius: 5px ;
+    /*border: 3px solid #d29922;*/
+    margin: 10px auto;
+    background-color: #171717;
+
+}
+
+#send{
+
+    float: right;
+    background-color: #0c8ac5;
+    margin: 10px;
+    color: #fdf6e3;
+    outline-style: none;
+
+}
+
+.my_info{
+
+    text-align: right;
+    width:100%;
+
+    /*background-color: #509839;*/
+
+}
+
+.my_info>span{
+
+    font-size: 10px;
+    border: 1px solid #509839;
+    color: #509839;
+    border-radius: 3px;
+}
+
+.my_one_info{
+    color: #fdf6e3;
+
+    text-align: right;
+    background-color: #509839;
+    border-radius: 5px;
+    padding: 3px;
+    word-break:break-all
+
+}
+
+.other_info{
+    text-align: left;
+    width: 100%;
+    /*background-color: #c03035;*/
+}
+
+.other_info>span{
+    font-size: 10px;
+    border: 1px solid #0c8ac5;
+    color: #0c8ac5;
+    border-radius: 3px;
+
+
+}
+
+.other_one_info{
+    width: 300px;
+    padding: 3px;
+
+
+    color: #fdf6e3;
+    text-align: left;
+    background-color: #0c8ac5;
+    border-radius: 5px;
+    word-break:break-all
+
+}
+/*更名输入框*/
+#new_name{
+    width: 80px;
+    height: 20px;
+    border: 0;
+    padding: 0;
+    margin-right: 10px;
+    color: #0c8ac5;
+    border-radius: 3px;
+    float: right;
+    text-indent: 5px;
+}
+#change_name{
+    font-size: 11px;
+    line-height: 20px;
+
+    width: 40px;
+    height: 20px;
+    padding: 0;
+    background-color: #0c8ac5;
+    color: #fdf6e3;
+    margin-right: 0 ;
+    /*border: 1px solid #fdf6e3;*/
+    border-radius: 3px;
+
+    float: right;
+    outline-style: none;
+
+
+
+}
+

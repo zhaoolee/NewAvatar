@@ -1,0 +1,173 @@
+
+/*裁剪图片基础样式*/
+#target{
+    width: 250px;
+    height: 250px;
+}
+
+#img-container{
+    width: 80%;
+    height: 250px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+/*背景样式*/
+
+.clearfix:before, .clearfix:after{
+    content: "";
+    display: table;
+}
+
+.clearfix:after{
+
+    clear:both;
+}
+
+/*适配非主流浏览器(IE浏览器)*/
+
+.clearfix{
+
+    zoom:1;
+
+}
+#bg{
+
+    /*width: 400px;*/
+    /*height: 800px;*/
+    align-content: center;
+    margin: 0 auto;
+
+    background-image: url("/static/images/xmt/desc_image/background.jpg");
+    background-size:100% 100%;
+}
+
+
+#preview-contain{
+
+    text-align: center;
+
+
+}
+
+#two_image{
+
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin: 0 auto;
+
+
+}
+
+#desc_img{
+
+    width: 100px;
+    height: 100px;
+
+    top: 0;
+    left: 0;
+    position: absolute;
+
+
+}
+
+#preview{
+
+    width: 100px;
+    height: 100px;
+
+}
+
+
+/*设置下一步 按钮*/
+
+
+
+#my_label{
+    /*display: none;*/
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+
+label{
+
+    width: 250px;
+    height: 50px;
+    background-color: #c03035;
+    text-align: center;
+    color: #fdf6e3;
+    line-height: 50px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border-bottom: 2px solid #fdf6e3;
+
+}
+
+#my_mull{
+
+    height: 150px;
+
+}
+
+#choose_image{
+
+    position: relative;
+    left: 100px;
+    top:-70px;
+
+}
+
+
+
+
+.jcrop-holder{
+
+    margin: 10px auto 0;
+    overflow:hidden;
+
+}
+
+#get_success{
+
+    width: 250px;
+    height: 40px;
+
+}
+
+#my_point{
+    text-align: center;
+    color: #0c8ac5;
+}
+
+
+#long{
+
+    font-size: 20px;
+    color: #fdf6e3;
+    text-align: center;
+    background-color: #c03035;
+    padding: 10px;
+
+
+}
+
+
+#three_page{
+
+    width: 200px;
+
+    margin: 10px auto 0;
+
+}
+
+
+#preview{
+
+
+    width: 100px;
+    height: 100px;
+}
+

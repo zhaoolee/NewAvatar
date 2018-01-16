@@ -1,0 +1,164 @@
+.clearfix:before, .clearfix:after{
+    content: "";
+    display: table;
+}
+
+.clearfix:after{
+
+    clear:both;
+}
+
+/*适配非主流浏览器(IE浏览器)*/
+
+.clearfix{
+
+    zoom:1;
+
+}
+#bg{
+
+    /*width: 400px;*/
+    /*height: 800px;*/
+    align-content: center;
+    margin: 0 auto;
+
+    background-image: url("/static/images/xmt/desc_image/background.jpg");
+    background-size:100% 100%;
+}
+
+.design_desc>img{
+
+    width: 80px;
+    height: 80px;
+    margin: 3px;
+
+}
+
+
+#my_mull{
+
+    height: 150px;
+
+}
+
+
+.big_title{
+
+    font-size: 25px;
+    color: #fdf6e3;
+    background-color: #c03035;
+    width: 250px;
+    text-align: center;
+    margin: 30px auto 10px;
+}
+
+.desc_images{
+    width: 300px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+
+.get_image{
+    margin: 0 50px;
+}
+
+
+form>input{
+
+    height: 50px;
+
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+
+label{
+
+    width: 300px;
+    height: 50px;
+    background-color: #c03035;
+    text-align: center;
+    color: #fdf6e3;
+    line-height: 50px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border-bottom: 2px solid #fdf6e3;
+
+}
+
+#upload{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#my_new_icon{
+
+    width: 200px;
+    /*height: 300px;*/
+    margin: 80px auto;
+    /*border-radius: 20px;*/
+    /*border: 3px solid #c03035;*/
+
+}
+
+#my_new_icon>img{
+    width: 200px;
+    height: 200px;
+}
+
+
+#my_label{
+    display: none;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#two_bg{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
+}
+
+#long{
+
+
+    font-size: 20px;
+    color: #fdf6e3;
+    text-align: center;
+    background-color: #c03035;
+
+}
+
+
+#bg-contain{
+
+}
+
+/*裁剪功能新增样式*/
+
+#img-container{
+
+    width: 350px;
+    height: 300px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+
+

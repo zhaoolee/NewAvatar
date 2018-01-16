@@ -1,0 +1,493 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link rel="stylesheet" href="{% static 'css/xmt/get_photo.css' %}">
+    <script src="{% static 'js/Jcrop/jquery.min.js' %}"></script>
+    <script src="{% static 'js/Jcrop/jquery.Jcrop.min.js' %}"></script>
+
+    <title>你是第{{ u_num }}个访问者</title>
+
+
+</head>
+
+<script>
+
+    // 显示第二步的提示
+
+    $(function () {
+
+
+        setInterval(function () {
+            var img_src = $("#img-container > img").attr("src");
+            // 如果图像为空
+            if (img_src == "") {
+            }
+            // 如果图像不为空
+            else {
+                $("#my_point").attr("style", "display: block;")
+            }
+
+        }, 1000)
+
+
+    });
+
+
+    // 显示第三步的按钮
+    $(function () {
+        var last_img = "lee";
+
+        var source_img;
+
+
+        setInterval(function () {
+            //如果图像src改变则显示,获取图形
+
+            console.log("asdasdfasdfasd");
+            var img_src = $("#preview").attr("src");
+
+            // 如果是第一次,把原图像数据存入 source_img
+            if (last_img == "lee") {
+
+
+                source_img = img_src;
+                console.log("源图像为" + source_img);
+                last_img = "eel";
+
+            }
+
+            // 如果不是第一次
+            else {
+
+                // 如果图像发生了改变, 显示按钮
+                if (img_src != source_img) {
+
+                    $("#my_label").attr("style", "display: block;");
+
+                }
+
+                // 如果不改变则不显示
+                else {
+
+
+                }
+
+            }
+
+        }, 1000)
+
+    })
+
+
+</script>
+
+<script>
+
+    $(function () {
+
+
+        $("#bg").css("height", $(document).height());
+        $("#my_mull").css("height", $(document).height()*0.2);
+
+
+        $("#choose_image>button").click(function () {
+
+
+            $("#input_choose_image").click()
+
+        });
+
+
+        //点击下一步按钮后,将图片提交到后台
+
+
+    })
+
+</script>
+
+
+<script>
+    var t_img_t_w;
+    var t_img_t_h;
+    $(function () {
+            // 绘制画板
+            function canvas_image() {
+
+                var canvas = document.getElementById('canvas');
+                var source = document.getElementById('source');
+                var preview = document.getElementById('preview');
+
+                // 定义压缩图片
+                function compress_img() {
+                    var width = $("#w").val();
+                    var height = $("#h").val();
+                    var context = canvas.getContext('2d');
+
+                    var zoom = t_img_t_w / 250;
+                    if (t_img_t_h > t_img_t_w) {
+
+                        zoom = t_img_t_h / 250;
+
+                    }
+
+                    console.log("zoom-->" + zoom);
+                    // draw image params
+                    var sx = $("#x1").val() * zoom;
+                    var sy = $("#y1").val() * zoom;
+                    var sWidth = width * zoom;
+                    var sHeight = height * zoom;
+
+                    var dx = 0;
+                    var dy = 0;
+                    var dWidth = 300;
+                    var dHeight = 300;
+                    var quality = 1;
+
+                    canvas.width = dWidth;
+                    canvas.height = dHeight;
+
+                    context.drawImage(source, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+
+                    var dataUrl = canvas.toDataURL('image/jpeg', quality);
+                    preview.src = dataUrl;
+                }
+
+                // 压缩图片
+                compress_img()
+
+            }
+
+            // Create variables (in this scope) to hold the API and image size
+            var jcrop_api,
+                boundx,
+                boundy,
+
+                // Grab some information about the preview pane
+                $preview = $('#preview-pane'),
+                $pcnt = $('#preview-pane .preview-container'),
+                $pimg = $('#preview-pane .preview-container img'),
+
+                xsize = $pcnt.width(),
+                ysize = $pcnt.height();
+
+            $('#target').Jcrop({
+                onChange: updatePreview,
+                onSelect: updatePreview,
+                aspectRatio: 1,
+                // 初始位置
+                setSelect: [10, 10, 100, 100],
+                // 最小尺寸
+                minSize: [100, 100],
+                // 遮罩颜色
+                bgColor: '#0c8ac5',
+                touchSupport: true,
+                allowSelect: false
+
+            }, function () {
+                // Use the API to get the real image size
+                var bounds = this.getBounds();
+                boundx = bounds[0];
+                boundy = bounds[1];
+                // Store the API in the jcrop_api variable
+                jcrop_api = this;
+
+                // Move the preview into the jcrop container for css positioning
+                $preview.appendTo(jcrop_api.ui.holder);
+            });
+
+            function updatePreview(c) {
+                console.log("------>", t_img_t_h, "------>", t_img_t_w)
+                // 获取数据
+                $('#x1').val(c.x);
+                $('#y1').val(c.y);
+                $('#x2').val(c.x2);
+                $('#y2').val(c.y2);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+                if (parseInt(c.w) > 0) {
+                    var rx = xsize / c.w;
+                    var ry = ysize / c.h;
+
+                    $pimg.css({
+                        width: Math.round(rx * boundx) + 'px',
+                        height: Math.round(ry * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry * c.y) + 'px'
+                    });
+                }
+
+                // 调用绘制画板函数
+                canvas_image()
+            }
+
+            // 获取上传的图片资源
+            function setImageURL(url) {
+//                console.log(url);
+
+                $(".jcrop-holder img").attr("src", url);
+                $("#target").attr("src", url);
+            }
+
+            // 显示文件
+            $('input[type=file]').change(function () {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        // 通过 reader.result 来访问生成的 DataURL
+                        var url = reader.result;
+                        setImageURL(url);
+                        $("#target").attr("src", url);
+//                    $("#target").css("width",reader.width);
+
+
+                        $("#img-container img").css("height", "auto");
+
+                        var t_image = new Image();
+                        t_image.onload = function () {
+                            t_img_t_w = t_image.width;
+                            t_img_t_h = t_image.height;
+
+                            if (t_img_t_h > t_img_t_w) {
+
+                                $("#img-container img").css("height", "250px");
+                                $("#img-container img").css("width", "auto");
+
+                            }
+
+                            console.log("-->", t_image.width, "-->", t_image.height)
+                        };
+                        t_image.src = url
+
+
+                    };
+                    reader.readAsDataURL(file);
+                    // 动态改变画板尺寸
+
+                    // 调用绘制画板的函数
+                    canvas_image()
+                }
+            );
+        }
+    );
+
+
+</script>
+
+
+<script>
+
+    $(function () {
+
+        // 处理获取头像的事件
+
+        // 隐藏所有元素
+
+
+        $("#get_success").click(function () {
+
+            $("#two_page_content").attr("style", "display: none");
+
+            var file = $("#preview").attr("src");
+            var desc_id = $("#desc_id").text();
+            var u_id = $("#u_id").text();
+
+            console.log("下一步!");
+            var csrf_value2 = $("#csrfmiddlewaretoken").text();
+            var formData = new FormData();
+            formData.append("file", file);
+            console.log(file);
+
+            formData.append("csrfmiddlewaretoken", csrf_value2);
+            formData.append("desc_id", desc_id);
+            formData.append("u_id", u_id);
+
+            console.log("即将进入ajax");
+
+            function ajax_image() {
+
+
+
+                $.ajax({
+                    "url": "/xmt/get_icon/",
+                    "type": "POST",
+                    'data': formData,
+                    "processData": false,
+                    "contentType": false,
+                    "success": function (data) {
+
+                        $("#three_page").attr("style", "display: block");
+                        console.log("成功了");
+                        console.log(data.new_image_addr);
+
+
+
+                        new_html ='<img src="'+data.new_image_addr+'" alt="" width="200px">';
+                        new_html = new_html + '<div id="long">'+ '长按图片,保存头像' + '</div>';
+                        $("#three_page").append(new_html);
+
+                    }
+                });
+            }
+
+
+            ajax_image()
+        })
+
+
+        // 弹出新图片
+
+
+    })
+
+
+</script>
+
+
+<link rel="stylesheet" href="{% static 'css/xmt/demo_files/main.css' %}" type="text/css"/>
+<link rel="stylesheet" href="{% static 'css/xmt/demo_files/demos.css' %}" type="text/css"/>
+<link rel="stylesheet" href="{% static 'css/xmt/Jcss/jquery.Jcrop.css' %}" type="text/css"/>
+
+
+<style type="text/css">
+
+    /* Apply these styles only when #preview-pane has
+       been placed within the Jcrop widget */
+    .jcrop-holder #preview-pane {
+        display: block;
+        position: absolute;
+        z-index: 2000;
+        top: 10px;
+        right: -280px;
+        padding: 2px;
+        border: 1px rgba(0, 0, 0, .4) solid;
+        background-color: white;
+
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 2px;
+
+        -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+        box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* The Javascript code will set the aspect ratio of the crop
+       area based on the size of the thumbnail preview,
+       specified here */
+    #preview-pane .preview-container {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+    }
+
+</style>
+
+
+<body>
+
+<div id="bg-contain">
+
+
+    <div id="bg" class="clearfix">
+
+        <div id="my_mull">
+
+        </div>
+
+        <div id="three_page" style="display: none">
+
+
+
+        </div>
+
+
+        <div id="two_page_content">
+
+
+        <div>
+
+
+            <input type="file" accept="images/*" id="input_choose_image" style="display: none">
+
+
+            <div id="preview-contain">
+
+                <div id="two_image">
+
+                    <img src="/static/xmt/desc_image/00{{ desc_id }}.png" alt="" id="desc_img">
+                    <img id="preview" src="">
+                    <span id="choose_image">
+                <button type="button" class="btn btn-danger">选择头像</button>
+            </span>
+
+                </div>
+
+
+            </div>
+
+            <div id="my_point" style="display: none">
+                <strong>调整选区即时预览</strong>
+            </div>
+            <!--原图片-->
+            <div id="img-container">
+
+                <img src="" id="target" alt="">
+
+            </div>
+
+            <div id="preview-pane" style="display: none">
+
+                <div class="preview-container">
+
+                    <img id="source" src="" class="jcrop-preview" alt="Preview"/>
+
+                </div>
+
+            </div>
+
+
+            <!-- This is the form that our event handler fills -->
+            <form id="coords"
+                  class="coords"
+                  style="display: none">
+
+                <div class="inline-labels">
+                    <label>X1 <input type="text" size="4" id="x1" name="x1"/></label>
+                    <label>Y1 <input type="text" size="4" id="y1" name="y1"/></label>
+                    <label>X2 <input type="text" size="4" id="x2" name="x2"/></label>
+                    <label>Y2 <input type="text" size="4" id="y2" name="y2"/></label>
+                    <label>W <input type="text" size="4" id="w" name="w"/></label>
+                    <label>H <input type="text" size="4" id="h" name="h"/></label>
+                </div>
+            </form>
+            <canvas id="canvas" style="display: none"></canvas>
+            <div id="my_label" style="display: none">
+                <button id="get_success" type="button" class="btn btn-success">小汇出图!</button>
+
+                <!--<label>下一步</label>-->
+
+            </div>
+            <div id="desc_id" style="display: none">{{ desc_id }}</div>
+            <div id="u_id" style="display: none">{{ u_id }}</div>
+            <div id="csrfmiddlewaretoken" style="display: none">{{csrf_token}}</div>
+
+        </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

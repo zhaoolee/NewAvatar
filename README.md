@@ -42,5 +42,99 @@
 ## 使用说明:
 - ### 关于环境
 > requirements.txt为环境依赖文件列表
-> pip install -r requirements.txt 即可恢复到本地环境
-> 部署项目细则详见 https://www.jianshu.com/p/95828121f99b
+> fangyuanxiaozhan.sql 为测试数据库
+
+#  准备工作
+- 安装虚拟机: ubuntu16.04
+- 实验仓库地址: https://github.com/zhaoolee/NewAvatar
+
+# 从GitHub克隆项目
+```python
+git clone git://github.com/zhaoolee/NewAvatar.git
+```
+> ![获取项目](http://upload-images.jianshu.io/upload_images/3203841-167651a8d6d8fd6e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+# 安装数据库(要设置密码)
+```
+sudo apt-get install mysql-server
+```
+> ![设置密码](http://upload-images.jianshu.io/upload_images/3203841-33a0a3969ed3ddc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> ![重复确认密码](http://upload-images.jianshu.io/upload_images/3203841-0070651c4fbef812.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+- 登录数据库
+```
+mysql -uroot -pzhaoolee
+```
+
+> ![登录数据库](http://upload-images.jianshu.io/upload_images/3203841-a2378ea1847c49a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+```
+create database fangyuanxiaozhan charset=utf8;
+exit;
+```
+> ![创建数据库并退出](http://upload-images.jianshu.io/upload_images/3203841-d56726dad9268b03.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
+# 搭建python环境
+```
+sudo apt install python3
+```
+
+### 1. 安装虚拟环境软件,并将virtualenvwrapper.sh配置到shell环境中
+```
+sudo apt install python-pip
+sudo pip install virtualenv
+sudo pip install virtualenvwrapper
+```
+
+>![virtualenvwrapper.sh](http://upload-images.jianshu.io/upload_images/3203841-c950305ca0c3b922.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
+```
+# 添加pytho虚拟环境配置
+vim ~/.bashrc
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+```
+### 2.创建虚拟环境,安装依赖包
+```
+# 创建虚拟环境
+mkvirtualenv dj_py3 --python="/usr/bin/python3"
+# 进入虚拟环境(可跳过)
+workon dj_py3
+
+# 安装依赖包
+sudo apt-get install python3-dev
+# 进入刚下载的本地仓库
+cd NewAvatar
+pip install -r requirements.txt
+```
+
+# 修改项目配置文件
+```
+vim NewAvatar/fangyuanxiaozhan/settings.py
+```
+> ![更改登录数据库的密码](http://upload-images.jianshu.io/upload_images/3203841-b153f369424d7fb4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+# 将测试数据库导入到本地新建的数据库中
+```
+mysql -uroot -pzhaoolee fangyuanxiaozhan < fangyuanxiaozhan.sql
+```
+>![数据库fangyuanxiaozhan内的数据表](http://upload-images.jianshu.io/upload_images/3203841-91d4190995391625.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+# 运行项目
+```
+python manage.py runserver
+```
+>![运行项目成功](http://upload-images.jianshu.io/upload_images/3203841-071b13d126e843a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## 打开浏览器输入:
+```
+http://127.0.0.1:8000/xmt/start_game/
+```
+> ![运行成功](http://upload-images.jianshu.io/upload_images/3203841-bb9eba6fbffc725f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
